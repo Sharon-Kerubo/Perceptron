@@ -1,5 +1,7 @@
 from perceptron import Perceptron
 import numpy as np
+from sklearn.preprocessing import StandardScaler
+
 
 def accuracy(y_true, y_pred):
     accuracy = np.sum(y_true == np.around(y_pred)) / len(y_true)
@@ -15,6 +17,10 @@ X_train = X[:D_train]
 y_train = y[:D_train]
 X_test = X[D_train:]
 y_test = y[D_train:]
+
+sc = StandardScaler()
+X_train[:, :] = sc.fit_transform(X_train[:, :])
+X_test[:, :] = sc.transform(X_test[:, :])
 
 prcptrn = Perceptron(0.01, 1000)
 prcptrn.fit(X_train, y_train)
